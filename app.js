@@ -7,9 +7,11 @@ const userRouter = require('./routes/userRouter');
 const app = express();
 
 //LEC->MIDDLEWARES
-app.use(morgan('dev'));
-
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 app.use(express.json()); //NOTE to work with json in req.body we need this middleware
+app.use(express.static(`${__dirname}/public`));
 
 app.use((req, res, next) => {
   console.log('Hello from the middleware ☺');
