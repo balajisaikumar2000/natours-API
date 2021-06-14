@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 const bcrypt = require('bcryptjs');
+const catchAsync = require('../utils/catchAsync');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -42,6 +43,11 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
 });
 
 //NOTE pre middleware
@@ -81,6 +87,13 @@ userSchema.methods.changePasswordAfter = function (JWTTimestamp) {
   }
   return false; //false means not changed
 };
+
+userSchema.pre(/^find/, function (next) {
+  //this points to the current query
+  this.find({ active: { $ne: false } });
+  next();
+});
+
 userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
 
