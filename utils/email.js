@@ -16,9 +16,11 @@ const sendEmail = async (options) => {
     from: 'Balaji Sai Kumar',
     to: options.email,
     subject: options.subject,
-    tect: options.message,
+    text: options.message,
     // html:
   };
   //3)Actually send the email
-  transporter.sendMail(mailOptions);
+  await transporter.sendMail(mailOptions);
 };
+
+module.exports = sendEmail;
