@@ -1,8 +1,8 @@
 const express = require('express');
 const tourController = require('../controllers/tourController');
 const authController = require('../controllers/authController');
-
-const reviewController = require('../controllers/reviewController');
+const reviewRouter = require('./reviewRouter');
+// const reviewController = require('../controllers/reviewController');
 
 const Tour = require('../models/tourModel');
 
@@ -15,6 +15,7 @@ const router = express.Router();
 //if not,send back 400(bad request)
 //And it to the post handler stack
 
+router.use('/:tourId/reviews', reviewRouter); //whenever we encounter that url we will redirect to reviewRouter
 router
   .route('/top-5-cheap')
   .get(tourController.aliasTopTours, tourController.getAllTours);
@@ -36,11 +37,4 @@ router
     tourController.deleteTour
   );
 
-router
-  .route('/:tourId/reviews')
-  .post(
-    authController.protect,
-    authController.restrictTo('user'),
-    reviewController.createReview
-  );
 module.exports = router;

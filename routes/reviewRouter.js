@@ -4,7 +4,8 @@ const authController = require('../controllers/authController');
 
 // const Review = require('../models/reviewModel');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true }); //in order to get access to other router paramters
+
 router
   .route('/')
   .get(reviewController.getAllReviews)
