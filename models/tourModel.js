@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-const { promises } = require('stream');
-const validator = require('validator');
+// const { promises } = require('stream');
+// const validator = require('validator');
 // const User = require('./userModel');
 
 const tourSchema = new mongoose.Schema(
