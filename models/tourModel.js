@@ -108,6 +108,7 @@ const tourSchema = new mongoose.Schema(
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
+
 //virtual properties
 
 tourSchema.virtual('durationWeeks').get(function () {
